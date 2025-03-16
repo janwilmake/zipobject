@@ -7,8 +7,14 @@
     "description": "API for fetching contents from ZIP files with various filtering options"
   },
   "servers": [
-    { "url": "https://zipobject.com/" },
-    { "url": "https://zipobject.vercel.app/" }
+    {
+      "url": "https://zipobject.com/",
+      "description": "Monetized user-server that allows signup."
+    },
+    {
+      "url": "https://zipobject.vercel.app/",
+      "description": "Admin server protected with admin-secret"
+    }
   ],
   "security": [{}, { "bearerAuth": [] }],
   "paths": {
@@ -26,6 +32,16 @@
               "type": "string"
             },
             "description": "URL of the ZIP file to process, URL of a website where the zip can be found, or URL where a JSON object or file object can be found."
+          },
+
+          {
+            "name": "x-zip-api-key",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "API key to pass as bearer authorization token to the url where the zip/tar is located."
           },
 
           {
@@ -48,15 +64,6 @@
               "enum": ["file-object", "json"]
             },
             "description": "File objects are processed by looking at the file items and downloading binary, while json objects are processed by collpasing subsets into files when a property with known extension is encountered."
-          },
-          {
-            "name": "apiKey",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Authentication token for accessing the ZIP file"
           },
           {
             "name": "immutable",
@@ -324,7 +331,7 @@
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
-        "description": "Authentication token for accessing protected ZIP files"
+        "description": "Authentication token for the user of zipobject. For zipobject.vercel.app this is an admin-secret, but for zipobject.com this is an API gathered from the dashboard or over the /login API."
       }
     }
   }

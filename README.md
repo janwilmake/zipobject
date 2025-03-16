@@ -6,10 +6,18 @@ This is a great example of a small worker that adds ip-ratelimit, authentication
 
 ![](architecture.drawio.svg)
 
-TODO:
+## TODO:
 
 - Provide programmatic way to login and get API key, and document this in the OpenAPI. It's probably good to add this into sponsorflare as well.
 - Provide programmatic way to retrieve usage and show this in a table on per-month basis as well as last 14 days on a per-day basis in a graph.
 - Provide ability to create/rotate api key, and ensure the api key is not the same as the key you login with, but a key specifically made for API use.
 
 After this is there, this'd be a great thing to show to people, as a minimal example of how to build a paid API with Cloudflare.
+
+## CHANGELOG:
+
+### Zipobject Monetisation - 2025-03-16
+
+- ✅ Zipobject vercel should just be admin-authorized https://zipobject.vercel.app
+- ✅ Whereas zipobject.com should be at cloudflare and proxy it with monetisation looking at response content size and charge $0.20/GB.
+- ✅ Ensure zip URL authorization can be provided in `x-zip-api-Key` header only.
