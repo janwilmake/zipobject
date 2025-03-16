@@ -21,3 +21,13 @@ After this is there, this'd be a great thing to show to people, as a minimal exa
 - ✅ Zipobject vercel should just be admin-authorized https://zipobject.vercel.app
 - ✅ Whereas zipobject.com should be at cloudflare and proxy it with monetisation looking at response content size and charge $0.20/GB.
 - ✅ Ensure zip URL authorization can be provided in `x-zip-api-Key` header only.
+
+# Intended dependant open source projects
+
+- uithub: exploration of github
+- npmjz: exploration of npmjs/jsr and other package managers
+- ingestwiki: exploration of wikipedia
+- site2text: exploration of any website as markdown
+- gcombinator.news: the ycombinator site but with extra features
+
+...you?! ☝️
