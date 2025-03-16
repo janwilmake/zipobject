@@ -11,7 +11,7 @@ routes = [
 
 [vars]
 GITHUB_REDIRECT_URI = "https://zipobject.com/callback"
-LOGIN_REDIRECT_URI = "http://zipobject.com/"
+LOGIN_REDIRECT_URI = "http://zipobject.com/dashboard"
 
 [[durable_objects.bindings]]
 name = "SPONSOR_DO"

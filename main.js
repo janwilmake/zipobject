@@ -1,11 +1,14 @@
 import { middleware, RatelimitDO, ratelimit, getSponsor } from "sponsorflare";
 export { RatelimitDO };
+import dashboard from "./dashboard-template.html";
+
 export default {
   fetch: async (request, env, ctx) => {
     // Handle sponsorflare auth
     const sponsorflare = await middleware(request, env);
     if (sponsorflare) return sponsorflare;
-    const { is_authenticated, balance } = await getSponsor(request, env);
+    const { is_authenticated, balance, owner_login, avatar_url, access_token } =
+      await getSponsor(request, env);
 
     const requestLimit =
       is_authenticated && balance && balance > 0 ? undefined : 50;
@@ -26,6 +29,22 @@ export default {
 
     // Proxy request to zipobject.vercel.app with admin secret
     const url = new URL(request.url);
+
+    if (url.pathname === "/dashboard") {
+      return new Response(
+        dashboard.replace(
+          "</body>",
+          `<script>window.data = ${JSON.stringify({
+            access_token,
+            balance,
+            owner_login,
+            avatar_url,
+          })}</script></body>`,
+        ),
+        { headers: { "content-type": "text/html;charset=utf8" } },
+      );
+    }
+
     const targetUrl = new URL(
       url.pathname + url.search,
       "https://zipobject.vercel.app",

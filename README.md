@@ -1,11 +1,7 @@
-# Evalon
+# zipobject
 
-Goals:
+Monetised and authenticated cloudflare worker (using sponsorflare) that proxies request with monetisation and ratelimit in between, looking at response content size and charges $0.20/GB.
 
-- Create a layer on top of cloudflare with 1:1 compatibility with wrangler-based cloudflare workers.
-- Focus on easy migration and CI/CD through GitHub
-- Create my own custom improvements on the Cloudflare stack so creating authed, monetised agent tools (via OpenAPI, MCP, etc) becomes easier.
-- Allow third parties to build other "stack preferences" on top of our Enterprise API.
+This is a great example of a small worker that adds ip-ratelimit, authentication, and monetisation in just over 100 lines of code, charging based on the response size!
 
-related:
-https://hub.nuxt.com
+TODO: Public repos is as cheap as possible (see cost vercel), private repos cost is 10x (profit is here).
