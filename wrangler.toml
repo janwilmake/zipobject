@@ -1,0 +1,27 @@
+name = "zipobject"
+compatibility_date = "2025-03-01"
+dev.port = 3000
+main = "./main.js"
+assets.directory = "./"
+
+routes = [
+    {custom_domain = true, pattern = "zipobject.com"},
+    {custom_domain = true, pattern = "www.zipobject.com"}
+]
+
+[vars]
+GITHUB_REDIRECT_URI = "https://zipobject.com/callback"
+LOGIN_REDIRECT_URI = "http://zipobject.com/"
+
+[[durable_objects.bindings]]
+name = "SPONSOR_DO"
+class_name = "SponsorDO"
+script_name = "sponsorflare2"
+
+[[durable_objects.bindings]]
+name = "RATELIMIT_DO"
+class_name = "RatelimitDO"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RatelimitDO"]
