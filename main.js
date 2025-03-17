@@ -47,8 +47,12 @@ export default {
 
     const targetUrl = new URL(
       url.pathname + url.search,
-      "https://zipobject.vercel.app",
+      env.SKIP_LOGIN === "true"
+        ? "http://localhost:3001"
+        : "https://zipobject.vercel.app",
     );
+
+    console.log({ targetUrl });
 
     const proxyRequest = new Request(targetUrl, {
       method: request.method,

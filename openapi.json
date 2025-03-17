@@ -33,7 +33,6 @@
             },
             "description": "URL of the ZIP file to process, URL of a website where the zip can be found, or URL where a JSON object or file object can be found."
           },
-
           {
             "name": "x-zip-api-key",
             "in": "header",
@@ -43,7 +42,6 @@
             },
             "description": "API key to pass as bearer authorization token to the url where the zip/tar is located."
           },
-
           {
             "name": "zipType",
             "in": "query",
@@ -54,7 +52,6 @@
             },
             "description": "What type of zip is it? Defaults to zipball"
           },
-
           {
             "name": "objectType",
             "in": "query",
@@ -76,13 +73,42 @@
             "description": "Indicates if the ZIP file is immutable"
           },
           {
+            "name": "omitFirstSegment",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "For GitHub, npmjs, and JSR, this is needed. For other zips this may not be the case."
+          },
+          {
+            "name": "rawUrlPrefix",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Prefix to use for a raw URL"
+          },
+          {
+            "name": "plugins",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of plugins to use"
+          },
+
+          {
             "name": "matchFilenames",
             "in": "query",
             "required": false,
             "schema": {
               "type": "string"
             },
-            "description": "Comma-separated list of filenames to match (case-insensitive)"
+            "description": "Comma-separated list of filenames to match (case-insensitive). Deprecated - use pathPatterns instead."
           },
           {
             "name": "ext",
@@ -91,7 +117,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Comma-separated list of file extensions to include"
+            "description": "Comma-separated list of file extensions to include. Deprecated - use pathPatterns instead."
           },
           {
             "name": "dir",
@@ -100,7 +126,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Comma-separated list of directories to include"
+            "description": "Comma-separated list of directories to include. Deprecated - use pathPatterns instead."
           },
           {
             "name": "exclude-ext",
@@ -109,7 +135,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Comma-separated list of file extensions to exclude"
+            "description": "Comma-separated list of file extensions to exclude. Deprecated - use pathPatterns instead."
           },
           {
             "name": "exclude-dir",
@@ -118,7 +144,44 @@
             "schema": {
               "type": "string"
             },
-            "description": "Comma-separated list of directories to exclude"
+            "description": "Comma-separated list of directories to exclude. Deprecated - use pathPatterns instead."
+          },
+          {
+            "name": "allowedPaths",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of base paths allowed"
+          },
+          {
+            "name": "pathPatterns",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Glob pattern for files to include. If provided, will filter path on this."
+          },
+          {
+            "name": "excludePathPatterns",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Glob pattern for files to exclude"
+          },
+          {
+            "name": "enableFuzzyMatching",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Boolean to enable fuzzy matching for pathPatterns (like VS Code's Cmd+P)"
           },
           {
             "name": "disableGenignore",
@@ -128,7 +191,7 @@
               "type": "boolean",
               "default": false
             },
-            "description": "`.genignore` works like `.gitignore` and can be placed in the ZIP to automatically filter out files.\n\nTo disable this automatic filter you can set this to true."
+            "description": "`.genignore` works like `.gitignore` and the repo owner can place this file in the repo to automatically filter out these files. To disable this and also to disable the default genignore, you can set this to true."
           },
           {
             "name": "maxFileSize",
@@ -140,13 +203,52 @@
             "description": "Maximum file size to include (in bytes)"
           },
           {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A text/pattern to search for in the file content"
+          },
+          {
+            "name": "searchUseRegex",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Boolean to interpret search as a regular expression"
+          },
+          {
+            "name": "searchCaseSensitive",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Boolean to enable/disable case sensitivity"
+          },
+          {
+            "name": "searchMatchWholeWord",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Boolean to match complete words only"
+          },
+          {
             "name": "maxTokens",
             "in": "query",
             "required": false,
             "schema": {
               "type": "integer"
             },
-            "description": "Maximum number of tokens allowed in the response"
+            "description": "Maximum number of tokens allowed in the response. Parse will stop including files after this number of tokens."
           },
           {
             "name": "yamlString",
@@ -155,14 +257,15 @@
             "schema": {
               "type": "string"
             },
-            "description": "An URL Encoded string of a yaml of a subset of the file hierarchy of files you want to include"
+            "description": "An URL Encoded string of a yaml of a subset of the file hierarchy of files you want to include. Deprecated - use pathPatterns instead."
           },
           {
             "name": "omitFiles",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             },
             "description": "If set to 'true' the response will not include the files"
           },
@@ -171,7 +274,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             },
             "description": "If set to 'true' the response will not include the tree"
           },
@@ -180,7 +284,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "boolean"
+              "type": "boolean",
+              "default": false
             },
             "description": "If set to 'true' the response will not be cached"
           }
@@ -265,9 +370,56 @@
                             "type": "string",
                             "description": "GET URL resolving to the content"
                           },
+                          "updatedAt": {
+                            "type": "number",
+                            "description": "Timestamp of when the file was last updated"
+                          },
                           "json": {
                             "type": "object",
                             "description": "If content is in JSON, YAML, CSV, XML or other structured data format, the parsed data may be put here as JSON object"
+                          },
+                          "imports": {
+                            "type": "object",
+                            "description": "Map of imported paths to list of imported names",
+                            "additionalProperties": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "exportDefault": {
+                            "type": "array",
+                            "description": "List of default exports",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "mainComment": {
+                            "type": "string",
+                            "description": "Main comment from the file"
+                          },
+                          "parse": {
+                            "type": "object",
+                            "description": "SWC parse result for the file"
+                          },
+                          "data": {
+                            "type": "object",
+                            "description": "SWC parse for code-files, parsed to statements and imports",
+                            "properties": {
+                              "imports": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object"
+                                }
+                              },
+                              "statements": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object"
+                                }
+                              }
+                            }
                           }
                         }
                       }
@@ -324,6 +476,114 @@
         "type": "object",
         "additionalProperties": {
           "anyOf": [{ "type": "null" }, { "$ref": "#/components/schemas/Tree" }]
+        }
+      },
+
+      "FileEntry": {
+        "type": "object",
+        "required": ["type", "size", "hash", "updatedAt"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["binary", "content"],
+            "description": "Type of file content"
+          },
+          "content": {
+            "type": "string",
+            "description": "UTF-8 content of the file"
+          },
+          "binary": {
+            "type": "string",
+            "format": "byte",
+            "description": "Binary content as ArrayBuffer"
+          },
+          "url": {
+            "type": "string",
+            "description": "URL to the file content"
+          },
+          "size": {
+            "type": "integer",
+            "description": "Size of the file in bytes"
+          },
+          "hash": {
+            "type": "string",
+            "description": "Hash of the content that makes it easy to check for equality"
+          },
+          "updatedAt": {
+            "type": "integer",
+            "description": "Timestamp of when the file was last updated"
+          },
+          "json": {
+            "type": "object",
+            "description": "Data file content parsed as json (json, toml, yaml files)"
+          },
+          "imports": {
+            "type": "object",
+            "description": "Imported names",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "exportDefault": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Default exports"
+          },
+          "mainComment": {
+            "type": "string",
+            "description": "Main comment from the file"
+          },
+          "parse": {
+            "type": "object",
+            "description": "SWC parse result"
+          },
+          "data": {
+            "type": "object",
+            "description": "SWC parse for code-files, parsed to statements and imports",
+            "properties": {
+              "imports": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "statements": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "StreamHandlerOptions": {
+        "type": "object",
+        "properties": {
+          "shouldOmitFiles": {
+            "type": "boolean",
+            "description": "Whether to omit files from the response"
+          },
+          "shouldOmitTree": {
+            "type": "boolean",
+            "description": "Whether to omit tree from the response"
+          },
+          "disableGenignore": {
+            "type": "boolean",
+            "description": "Whether to disable genignore filtering"
+          },
+          "plugins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of plugins to use"
+          }
         }
       }
     },
