@@ -212,14 +212,13 @@
             "description": "A text/pattern to search for in the file content"
           },
           {
-            "name": "searchUseRegex",
+            "name": "regex",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "boolean",
-              "default": false
+              "type": "string"
             },
-            "description": "Boolean to interpret search as a regular expression"
+            "description": "Provide this instead of 'search' to search using a regex. must be base64 encoded and urlEncoded (e.g. \"encodeURIComponent(btoa(your_regex))\")"
           },
           {
             "name": "searchCaseSensitive",
@@ -559,6 +558,11 @@
                 }
               }
             }
+          },
+          "matches": {
+            "description": "Array of regex matches if you provided a 'search' filter.",
+            "type": "array",
+            "items": { "type": "array", "items": { "type": "string" } }
           }
         }
       },
