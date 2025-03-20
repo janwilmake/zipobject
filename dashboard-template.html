@@ -9,7 +9,7 @@
     <script>
         // This would normally be provided by the server
         window.data = window.data || {
-            apiKey: "your-api-key-here",
+            authorization: "your-api-key-here",
             balance: 10.50,
             owner_login: "username",
             avatar_url: "/api/placeholder/80/80"
@@ -149,7 +149,7 @@
                 // Set API Key
                 const apiKeyInput = document.getElementById('apiKeyInput');
                 if (apiKeyInput) {
-                    apiKeyInput.value = window.data.access_token || 'No API key available';
+                    apiKeyInput.value = window.data.authorization || 'No API key available';
                 }
 
                 // Set Balance

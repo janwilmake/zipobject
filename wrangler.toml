@@ -9,6 +9,10 @@ routes = [
     {custom_domain = true, pattern = "www.zipobject.com"}
 ]
 
+services = [
+  { binding = "ZIPOBJECT_TREE", service = "zipobject_tree" }
+]
+
 [vars]
 GITHUB_REDIRECT_URI = "https://zipobject.com/callback"
 LOGIN_REDIRECT_URI = "http://zipobject.com/dashboard"

@@ -96,56 +96,12 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": ["imports", "parse", "data"]
             },
             "description": "Comma-separated list of plugins to use"
           },
 
-          {
-            "name": "matchFilenames",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Comma-separated list of filenames to match (case-insensitive). Deprecated - use pathPatterns instead."
-          },
-          {
-            "name": "ext",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Comma-separated list of file extensions to include. Deprecated - use pathPatterns instead."
-          },
-          {
-            "name": "dir",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Comma-separated list of directories to include. Deprecated - use pathPatterns instead."
-          },
-          {
-            "name": "exclude-ext",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Comma-separated list of file extensions to exclude. Deprecated - use pathPatterns instead."
-          },
-          {
-            "name": "exclude-dir",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Comma-separated list of directories to exclude. Deprecated - use pathPatterns instead."
-          },
           {
             "name": "allowedPaths",
             "in": "query",
@@ -287,6 +243,51 @@
               "default": false
             },
             "description": "If set to 'true' the response will not be cached"
+          },
+          {
+            "name": "matchFilenames",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of filenames to match (case-insensitive). Deprecated - use pathPatterns instead."
+          },
+          {
+            "name": "ext",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of file extensions to include. Deprecated - use pathPatterns instead."
+          },
+          {
+            "name": "dir",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of directories to include. Deprecated - use pathPatterns instead."
+          },
+          {
+            "name": "exclude-ext",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of file extensions to exclude. Deprecated - use pathPatterns instead."
+          },
+          {
+            "name": "exclude-dir",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of directories to exclude. Deprecated - use pathPatterns instead."
           }
         ],
         "responses": {

@@ -7,8 +7,15 @@ export default {
     // Handle sponsorflare auth
     const sponsorflare = await middleware(request, env);
     if (sponsorflare) return sponsorflare;
-    const { is_authenticated, balance, owner_login, avatar_url, access_token } =
-      await getSponsor(request, env);
+
+    const {
+      is_authenticated,
+      balance,
+      owner_login,
+      avatar_url,
+      access_token,
+      authorization,
+    } = await getSponsor(request, env);
 
     const requestLimit =
       is_authenticated && balance && balance > 0 ? undefined : 50;
@@ -30,12 +37,27 @@ export default {
     // Proxy request to zipobject.vercel.app with admin secret
     const url = new URL(request.url);
 
+    if (url.pathname.startsWith("/tree/")) {
+      request.headers.set("Authorization", `Bearer ${env.TREE_SECRET}`);
+
+      ctx.waitUntil(
+        getSponsor(request, env, {
+          // 1m requests for $10
+          charge: 100 / 100000,
+          allowNegativeClv: true,
+        }),
+      );
+
+      // forward request to here and return response directly
+      return env.ZIPOBJECT_TREE.fetch(request);
+    }
+
     if (url.pathname === "/dashboard") {
       return new Response(
         dashboard.replace(
           "</body>",
           `<script>window.data = ${JSON.stringify({
-            access_token,
+            authorization,
             balance,
             owner_login,
             avatar_url,
