@@ -22,6 +22,10 @@ After this is there, this'd be a great thing to show to people, as a minimal exa
 - ✅ Whereas zipobject.com should be at cloudflare and proxy it with monetisation looking at response content size and charge $0.20/GB.
 - ✅ Ensure zip URL authorization can be provided in `x-zip-api-Key` header only.
 
+### Added tree endpoint
+
+- ✅ Added much cheaper endpoint to receive the tree for any repo (zip only): `/tree/{zipUrl}`
+
 # Intended dependant open source projects
 
 - uithub: exploration of github
