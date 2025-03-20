@@ -20,7 +20,7 @@ This is a great example of a small worker that adds ip-ratelimit, authentication
 
 # Intended dependant open source projects
 
-- uithub: exploration of github
+- [uithub](https://github.com/janwilmake/uithub): exploration of github
 - npmjz: exploration of npmjs/jsr and other package managers
 - ingestwiki: exploration of wikipedia
 - site2text: exploration of any website as markdown
