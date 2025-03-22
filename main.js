@@ -38,7 +38,10 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname.startsWith("/tree/")) {
-      request.headers.set("Authorization", `Bearer ${env.TREE_SECRET}`);
+      const headers = new Headers({
+        ...request.headers,
+        Authorization: `Bearer ${env.TREE_SECRET}`,
+      });
 
       ctx.waitUntil(
         getSponsor(request, env, {
@@ -49,7 +52,7 @@ export default {
       );
 
       // forward request to here and return response directly
-      return env.ZIPOBJECT_TREE.fetch(request);
+      return env.ZIPOBJECT_TREE.fetch(new Request(request.url, { headers }));
     }
 
     if (url.pathname === "/dashboard") {
