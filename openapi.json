@@ -323,7 +323,7 @@
           },
 
           {
-            "name": "allowedPath",
+            "name": "basePath",
             "in": "query",
             "required": false,
             "schema": {
