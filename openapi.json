@@ -323,13 +323,14 @@
           },
 
           {
-            "name": "allowedPaths",
+            "name": "allowedPath",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": { "type": "string" }
             },
-            "description": "Comma-separated list of base paths allowed"
+            "description": "one or more base paths allowed"
           },
           {
             "name": "pathPatterns",
